@@ -16,6 +16,7 @@ import {
 } from "react-icons/fa";
 import { list } from "firebase/storage";
 import Contact from "../components/Contact";
+import { Link } from "react-router-dom";
 
 export default function Listing() {
   SwiperCore.use([Navigation]);
@@ -51,9 +52,11 @@ export default function Listing() {
   return (
     <main>
       {loading && <p className="text-center my-7 text-2xl">Loading...</p>}
-      {error && (
-        <p className="text-center my-7 text-2xl">Something went wrong!</p>
-      )}
+      <Link to={"/"}>
+        {error && (
+          <p className="text-center my-7 text-2xl hover:text-red-700 ">Something went wrong!</p>
+        )}
+      </Link>
       {listing && !loading && !error && (
         <div>
           <Swiper
