@@ -29,6 +29,8 @@ export default function Profile() {
   const [showListingsError, setShowListingsError] = useState(false);
   const [updateSuccess, setUpdateSuccess] = useState(false);
   const [userListings, setUserListings] = useState([]);
+  const [showListings, setShowListings] = useState(false);//state to hide the listings
+
   const dispatch = useDispatch();
 
   //firebase storage
@@ -140,10 +142,21 @@ export default function Profile() {
         setShowListingsError(true);
         return;
       }
-
       setUserListings(data);
+      setShowListings(true);
     } catch (error) {
       setShowListingsError(true);
+      console.log(error);
+    }
+  };
+
+  //hide listings function
+  const handleHideListings = () => {
+    try {
+      setShowListings(false);
+      setUserListings(null);
+    }catch{
+      console.log("error");
     }
   };
  
@@ -247,12 +260,21 @@ export default function Profile() {
       <p className="text-green-700 mt-5">
         {updateSuccess ? "User is updated successfully! " : ""}
       </p>
-      <button
-        onClick={handleShowListings}
-        className="text-white w-full mt-5 bg-slate-700 p-3 rounded-lg"
-      >
+
+      {showListings ? (
+        <button
+          onClick={handleHideListings}
+          className="text-white w-full mt-5 bg-slate-700 p-3 rounded-lg uppercase"
+        >
+          Hide Listings
+        </button>
+      ):(
+        <button onClick={handleShowListings} className="text-white w-full mt-5 bg-slate-700 p-3 rounded-lg uppercase">
         Show Listings
       </button>
+      )}
+
+     
       <p className="text-red-700 mt-5">
         {showListingsError ? "Error showing Listings" : ""}
       </p>
